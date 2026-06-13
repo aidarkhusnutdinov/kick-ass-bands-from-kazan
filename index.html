@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Интересные казанские группы</title>
+<meta name="description" content="Путеводитель по независимой музыкальной сцене Казани: 23 группы — кого послушать прямо сейчас.">
+<meta property="og:title" content="Интересные казанские группы">
+<meta property="og:description" content="23 группы независимой казанской сцены — с описанием и треком для быстрого прослушивания.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f1ece1;
+    --paper-2:#e9e2d3;
+    --ink:#1a1714;
+    --ink-soft:#544c42;
+    --accent:#e0301e;
+    --line:#cdc3b0;
+    --card:#fbf8f1;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(var(--line) 0.5px, transparent 0.5px);
+    background-size:22px 22px;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+
+  /* ---------- Header ---------- */
+  header{padding:64px 0 30px;border-bottom:3px solid var(--ink)}
+  .kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--accent);margin-bottom:18px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+  }
+  .kicker::before{content:"";width:34px;height:2px;background:var(--accent)}
+  h1{
+    font-family:'Unbounded',sans-serif;font-weight:800;
+    font-size:clamp(2.4rem,7vw,5rem);line-height:.98;letter-spacing:-.02em;
+    text-transform:uppercase;
+  }
+  h1 .em{color:var(--accent)}
+  .lede{
+    margin-top:22px;max-width:640px;font-size:clamp(1rem,2vw,1.18rem);color:var(--ink-soft);
+  }
+  .meta-row{
+    margin-top:26px;display:flex;gap:26px;flex-wrap:wrap;
+    font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.04em;color:var(--ink-soft);
+  }
+  .meta-row b{color:var(--ink)}
+  .meta-row a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--accent)}
+
+  /* ---------- List ---------- */
+  main{padding:8px 0 40px}
+  .band{
+    display:grid;
+    grid-template-columns:46px 200px 1fr 320px;
+    gap:26px;align-items:start;
+    padding:34px 0;border-bottom:1px solid var(--line);
+  }
+  .band:hover .num{color:var(--accent)}
+  .num{
+    font-family:'Unbounded',sans-serif;font-weight:800;font-size:18px;
+    color:var(--line);padding-top:4px;font-variant-numeric:tabular-nums;
+    transition:color .2s;
+  }
+  .photo{
+    aspect-ratio:1/1;width:100%;border-radius:4px;overflow:hidden;
+    background:var(--paper-2);border:1px solid var(--line);
+    filter:grayscale(100%) contrast(1.02);transition:filter .35s;
+  }
+  .band:hover .photo{filter:grayscale(0%)}
+  .photo img{width:100%;height:100%;object-fit:cover;display:block}
+  .info h2{
+    font-family:'Unbounded',sans-serif;font-weight:600;
+    font-size:clamp(1.3rem,2.6vw,1.7rem);line-height:1.05;letter-spacing:-.01em;margin-bottom:12px;
+  }
+  .info p{font-size:.97rem;color:var(--ink-soft);margin-bottom:16px}
+  .listen-link{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.04em;
+    text-transform:uppercase;text-decoration:none;color:var(--ink);
+    border:1.5px solid var(--ink);padding:8px 14px;border-radius:999px;
+    transition:all .18s;
+  }
+  .listen-link:hover{background:var(--ink);color:var(--paper)}
+  .listen-link svg{width:13px;height:13px}
+
+  /* ---------- Player facade ---------- */
+  .player{
+    width:100%;aspect-ratio:16/9;border-radius:6px;overflow:hidden;position:relative;
+    background:#000;cursor:pointer;border:1px solid var(--line);
+  }
+  .player .thumb{width:100%;height:100%;object-fit:cover;display:block;opacity:.85;transition:opacity .25s}
+  .player:hover .thumb{opacity:1}
+  .player .play{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  }
+  .player .play span{
+    width:58px;height:40px;background:var(--accent);border-radius:10px;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 4px 18px rgba(0,0,0,.4);transition:transform .2s,background .2s;
+  }
+  .player:hover .play span{transform:scale(1.08)}
+  .player .play svg{width:18px;height:18px;fill:#fff;margin-left:2px}
+  .player iframe{width:100%;height:100%;border:0;display:block}
+  .player.no-video{
+    cursor:default;background:var(--paper-2);
+    display:flex;align-items:center;justify-content:center;text-align:center;
+  }
+  .player.no-video span{
+    font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-soft);
+    padding:0 18px;line-height:1.6;
+  }
+
+  /* ---------- Footer ---------- */
+  footer{
+    border-top:3px solid var(--ink);padding:36px 0 70px;
+    font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-soft);letter-spacing:.03em;
+  }
+  footer a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--accent)}
+  footer p{margin-bottom:8px}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:900px){
+    .band{grid-template-columns:34px 1fr;gap:16px 18px;grid-template-areas:
+      "num photo"
+      "num info"
+      "num player";}
+    .num{grid-area:num}
+    .photo{grid-area:photo;max-width:180px}
+    .info{grid-area:info}
+    .player{grid-area:player}
+  }
+  @media (max-width:560px){
+    header{padding:44px 0 24px}
+    .band{grid-template-columns:1fr;grid-template-areas:
+      "num"
+      "photo"
+      "info"
+      "player";gap:14px;padding:28px 0}
+    .num{padding-top:0}
+    .photo{max-width:160px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker">Независимая сцена · Казань · путеводитель</div>
+    <h1>Интересные<br>казанские <span class="em">группы</span></h1>
+    <p class="lede">Двадцать три имени, которые делают независимую музыку в Казани и вокруг — от корпоративного панк-рока до татарской музыки будущего. Жмите ▶, чтобы послушать прямо здесь.</p>
+    <div class="meta-row">
+      <span><b id="count">23</b> группы</span>
+      <span>Источники: <a href="https://t.me/fest_vse" target="_blank" rel="noopener">@fest_vse</a>, <a href="https://inde.io/article/96362-novaya-muzyka-iz-tatarstana-80-ispolniteley-kotoryh-stoit-slushat-v-2025-godu/" target="_blank" rel="noopener">inde.io</a>, <a href="https://t.me/kazanalization" target="_blank" rel="noopener">@kazanalization</a></span>
+    </div>
+  </header>
+
+  <main id="list"></main>
+
+  <footer>
+    <p>Описания собраны из телеграм-канала фестиваля «ВСЕ» <a href="https://t.me/fest_vse" target="_blank" rel="noopener">@fest_vse</a>, материала <a href="https://inde.io/article/96362-novaya-muzyka-iz-tatarstana-80-ispolniteley-kotoryh-stoit-slushat-v-2025-godu/" target="_blank" rel="noopener">«Инде»</a> и канала <a href="https://t.me/kazanalization" target="_blank" rel="noopener">@kazanalization</a>.</p>
+    <p>Треки для прослушивания подгружаются с YouTube. Фото — пресс-материалы исполнителей и фестиваля.</p>
+  </footer>
+</div>
+
+<script src="data.js"></script>
+<script>
+  const playIcon = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+  const linkIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+
+  function makePlayer(b){
+    if(!b.yt){
+      return '<div class="player no-video"><span>Записи нет в открытом доступе —<br>смотрите по ссылке рядом</span></div>';
+    }
+    const thumb = 'https://i.ytimg.com/vi/'+b.yt+'/hqdefault.jpg';
+    return '<div class="player" data-yt="'+b.yt+'" role="button" tabindex="0" aria-label="Слушать ' + b.name.replace(/"/g,'') + '">'
+      + '<img class="thumb" loading="lazy" src="'+thumb+'" alt="">'
+      + '<div class="play"><span>'+playIcon+'</span></div></div>';
+  }
+
+  const list = document.getElementById('list');
+  list.innerHTML = BANDS.map((b,i)=>{
+    const n = String(i+1).padStart(2,'0');
+    return '<article class="band">'
+      + '<div class="num">'+n+'</div>'
+      + '<div class="photo"><img loading="lazy" src="'+b.img+'" alt="'+b.name.replace(/"/g,'')+'"></div>'
+      + '<div class="info"><h2>'+b.name+'</h2><p>'+b.desc+'</p>'
+      +   '<a class="listen-link" href="'+b.link+'" target="_blank" rel="noopener">'+(b.linkLabel||'Подробнее')+' '+linkIcon+'</a></div>'
+      + makePlayer(b)
+      + '</article>';
+  }).join('');
+  document.getElementById('count').textContent = BANDS.length;
+
+  function activate(el){
+    const id = el.getAttribute('data-yt');
+    if(!id) return;
+    el.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0" '
+      + 'title="YouTube" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+  }
+  list.addEventListener('click', e=>{
+    const p = e.target.closest('.player[data-yt]');
+    if(p) activate(p);
+  });
+  list.addEventListener('keydown', e=>{
+    if((e.key==='Enter'||e.key===' ') && e.target.classList.contains('player')){
+      e.preventDefault(); activate(e.target);
+    }
+  });
+</script>
+</body>
+</html>
