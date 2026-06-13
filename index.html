@@ -120,6 +120,14 @@
     font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-soft);
     padding:0 18px;line-height:1.6;
   }
+  .media{display:flex;flex-direction:column;gap:8px}
+  .yt-link{
+    display:inline-flex;align-items:center;gap:6px;align-self:flex-start;
+    font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.03em;
+    text-decoration:none;color:var(--ink-soft);transition:color .18s;
+  }
+  .yt-link:hover{color:var(--accent)}
+  .yt-link svg{width:11px;height:11px}
 
   /* ---------- Footer ---------- */
   footer{
@@ -134,11 +142,11 @@
     .band{grid-template-columns:34px 1fr;gap:16px 18px;grid-template-areas:
       "num photo"
       "num info"
-      "num player";}
+      "num media";}
     .num{grid-area:num}
     .photo{grid-area:photo;max-width:180px}
     .info{grid-area:info}
-    .player{grid-area:player}
+    .media{grid-area:media}
   }
   @media (max-width:560px){
     header{padding:44px 0 24px}
@@ -146,7 +154,7 @@
       "num"
       "photo"
       "info"
-      "player";gap:14px;padding:28px 0}
+      "media";gap:14px;padding:28px 0}
     .num{padding-top:0}
     .photo{max-width:160px}
   }
@@ -176,15 +184,21 @@
 <script>
   const playIcon = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
   const linkIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  const extIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>';
 
   function makePlayer(b){
     if(!b.yt){
-      return '<div class="player no-video"><span>Записи нет в открытом доступе —<br>смотрите по ссылке рядом</span></div>';
+      return '<div class="media"><div class="player no-video"><span>Записи нет в открытом доступе —<br>смотрите по ссылке рядом</span></div></div>';
     }
     const thumb = 'https://i.ytimg.com/vi/'+b.yt+'/hqdefault.jpg';
-    return '<div class="player" data-yt="'+b.yt+'" role="button" tabindex="0" aria-label="Слушать ' + b.name.replace(/"/g,'') + '">'
-      + '<img class="thumb" loading="lazy" src="'+thumb+'" alt="">'
-      + '<div class="play"><span>'+playIcon+'</span></div></div>';
+    const watch = 'https://www.youtube.com/watch?v='+b.yt;
+    return '<div class="media">'
+      + '<div class="player" data-yt="'+b.yt+'" role="button" tabindex="0" aria-label="Слушать ' + b.name.replace(/"/g,'') + '">'
+      +   '<img class="thumb" loading="lazy" src="'+thumb+'" alt="">'
+      +   '<div class="play"><span>'+playIcon+'</span></div>'
+      + '</div>'
+      + '<a class="yt-link" href="'+watch+'" target="_blank" rel="noopener">Открыть на YouTube '+extIcon+'</a>'
+      + '</div>';
   }
 
   const list = document.getElementById('list');
@@ -203,8 +217,8 @@
   function activate(el){
     const id = el.getAttribute('data-yt');
     if(!id) return;
-    el.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0" '
-      + 'title="YouTube" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+    el.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?rel=0&playsinline=1" '
+      + 'title="YouTube" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
   }
   list.addEventListener('click', e=>{
     const p = e.target.closest('.player[data-yt]');
